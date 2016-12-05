@@ -6,28 +6,34 @@ from gameover import Game_over
 class Square():
 	
 	def __init__(self):
-	
+		#here all objects are created
 		self.root = Tk()
 		self.root.resizable(width=False, height=False)
 		self.w = Canvas(self.root, width=1040, height=500)
 		self.w.pack()
 		self.create_buttons()
+		#then create_buttons makes all those buttons and shit
 		self.score = 0
 		self.yourscoreis = Label(self.root, text="Your score is:")
 		self.yourscoreis.place(x=400,y=10)
 		self.scorelabel = Label(self.root, text=str(self.score))
 		self.scorelabel.place(x=400,y=30)
+		#update score label every 2000 milliseconds by going to lower_score method which does that
 		self.scorelabel.after(2000, self.lower_score)
 		self.time = 0
+		#create time label and pack that shit into the bottom right corner son
 		self.timeLabel = Label(self.root, text=str(self.time))
 		self.timeLabel.pack(side=RIGHT, anchor=N)
+		#have the time label update every 100 millisecs and go to update_time method to do that
 		self.timeLabel.after(100, self.update_time)
 
 		self.root.mainloop()
 		
 
 	def create_buttons(self):
-	
+		#make squares by setting to photo image
+		#set the photoimage object to a button
+		#set the xcoord ycoord of the objects and place it
 		self.bluesquare = PhotoImage(file="bluesquare.png") 
 		self.btnblue = Button(self.root, image = self.bluesquare, command = self.bluesquare_clicked)
 		self.btnblue.image = self.bluesquare
@@ -109,13 +115,17 @@ class Square():
 		
 	def lower_score(self):
 		self.score-=1
+		#config updates the text 
 		self.scorelabel.config(text=str(self.score))
 		self.scorelabel.place(x=400,y=30)
+		#i dont know exactly why the line below works but it does so lmao 
 		self.scorelabel.after(2000, self.lower_score)
 		
 		
 	def update_time(self):
+		#time updates by .1 
 		self.time+=.1
+		#change the view with config
 		self.timeLabel.config(text=str(self.time))
 		'''
 		if self.time<0.01: # Account for rounding errors
@@ -129,9 +139,12 @@ class Square():
 	
 			
 	def white(self):
+		#for the luls
 		print("im a white square")
 		
 	def bluesquare_clicked(self):
+		#blue square being clicked is the main event of this whole game so 
+		#if you wanna do anything new put that shit in this method
 		self.increase_score()
 		self.move_whitesquares()
 		self.move_redsquare()
@@ -143,6 +156,7 @@ class Square():
 		self.scorelabel.place(x=400,y=30)
 		
 	def move_redsquare(self):
+		#the blue square is clicked and when the time is in a certain interval set the coordinates accordingly
 		if(self.time<1):
 			self.btnred_xcoord += randint(-30,30)
 			self.btnred_ycoord -= randint(-30,30)
